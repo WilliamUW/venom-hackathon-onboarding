@@ -1,0 +1,94 @@
+pragma ever-solidity >= 0.62.0;
+pragma AbiHeader expire;
+pragma AbiHeader pubkey;
+
+import "tip3/contracts/interfaces/IAcceptTokensTransferCallback.sol";
+import "tip3/contracts/interfaces/ITokenRoot.sol";
+import "tip4/contracts/CollectionBase.tsol";
+
+
+contract Sample is IAcceptTokensTransferCallback, CollectionBase {
+    uint static nonce;
+    uint256 static owner;
+
+    address root;
+    address wallet;
+    uint public state;
+
+    event StateChange(uint _state);
+    event ThankYou(address sender, uint128 amount);
+    event NewWallet(address some);
+
+    constructor(
+        uint _state, address root_,
+        TvmCell codeNft, 
+        TvmCell codeIndex,
+        TvmCell codeIndexBasis,
+        string json) 
+        
+    CollectionBase(codeNft, codeIndex, codeIndexBasis, json) public {
+
+        tvm.accept();
+        root = root_;
+        ITokenRoot(root).deployWallet{
+            value: 2_000_000_000,
+            callback: onDeployWallet
+        }(this, 1_000_000_000);
+        setState(_state);
+    }
+
+    function mint() external internalMsg {
+        _mintNft(_json);
+    }
+
+    function onDeployWallet(address _wallet) public {
+        wallet = _wallet;
+    }
+
+    function onAcceptTokensTransfer(
+        address tokenRoot,
+        uint128 amount,
+        address sender,
+        address senderWallet,
+        address remainingGasTo,
+        TvmCell payload
+    ) external override {
+        require(msg.sender == wallet, 103);
+        require(tokenRoot == root, 103);
+
+        emit ThankYou(sender, amount);
+
+        // disables warnings
+        tokenRoot;
+        senderWallet;
+        remainingGasTo;
+        payload;
+    }
+
+    function setStateByOwner(uint _state) public externalMsg {
+        require(msg.pubkey() == owner, 101);
+        tvm.accept();
+        setState(_state);
+    }
+
+    function setStateByAnyone(uint _state) external internalMsg {
+        require(msg.value >= 1_000_000_000, 102);
+        setState(_state);
+    }
+
+    function setState(uint _state) private {
+        require(_state <= 100, 103);
+        state = _state;
+
+        emit StateChange(_state);
+    }
+
+    function getDetails()
+        external
+        pure
+    returns (
+        uint state
+    ) {
+        return state;
+    }
+}
