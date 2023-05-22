@@ -1,13 +1,12 @@
 pragma ever-solidity >= 0.62.0;
+pragma AbiHeader time;
 pragma AbiHeader expire;
-pragma AbiHeader pubkey;
 
 import "tip3/contracts/interfaces/IAcceptTokensTransferCallback.sol";
 import "tip3/contracts/interfaces/ITokenRoot.sol";
-import "tip4/contracts/CollectionBase.tsol";
 
 
-contract Sample is IAcceptTokensTransferCallback, CollectionBase {
+contract Sample is IAcceptTokensTransferCallback {
     uint static nonce;
     uint256 static owner;
 
@@ -19,15 +18,7 @@ contract Sample is IAcceptTokensTransferCallback, CollectionBase {
     event ThankYou(address sender, uint128 amount);
     event NewWallet(address some);
 
-    constructor(
-        uint _state, address root_,
-        TvmCell codeNft, 
-        TvmCell codeIndex,
-        TvmCell codeIndexBasis,
-        string json) 
-        
-    CollectionBase(codeNft, codeIndex, codeIndexBasis, json) public {
-
+    constructor(uint _state, address root_) public {
         tvm.accept();
         root = root_;
         ITokenRoot(root).deployWallet{
@@ -37,9 +28,9 @@ contract Sample is IAcceptTokensTransferCallback, CollectionBase {
         setState(_state);
     }
 
-    function mint() external internalMsg {
-        _mintNft(_json);
-    }
+    // function mint() external internalMsg {
+    //     _mintNft(_json);
+    // }
 
     function onDeployWallet(address _wallet) public {
         wallet = _wallet;
@@ -65,10 +56,65 @@ contract Sample is IAcceptTokensTransferCallback, CollectionBase {
         payload;
     }
 
+    struct Session {
+        uint64 created;
+    }
+    mapping (uint256 => Session) public sessions;
+
+    uint8 constant MAX_CLEANUP_MSGS = 30;
+    mapping(uint256 => uint32) m_messages;
+
+    function gc() private inline {
+        uint counter = 0;
+        for ((uint256 bodyHash, uint32 expireAt) : m_messages) {
+            if (counter >= MAX_CLEANUP_MSGS) {
+                break;
+            }
+            counter++;
+            if (expireAt <= now) {
+                delete m_messages[bodyHash];
+            }
+        }
+    }
+
+    function afterSignatureCheck(TvmSlice body, TvmCell) private inline returns (TvmSlice) {
+        // load and drop message timestamp (uint64)
+        (, uint32 expireAt) = body.decode(uint64, uint32);
+        require(expireAt > now, 57);
+        uint256 bodyHash = tvm.hash(body);
+        require(!m_messages.exists(bodyHash), 1002);
+        tvm.accept();
+        m_messages[bodyHash] = expireAt;
+        return body;
+    }
+
+    function addSessionKeys(uint256[] hashes) public externalMsg {
+        require(msg.pubkey() == owner, 101);
+        tvm.accept();
+        for (uint256 hash_ : hashes) {
+            sessions[hash_] = Session({created: tx.timestamp});
+        }
+        gc();
+    }
+
+    modifier onlySessionKey(string key) {
+        require(sessions.exists(sha256(key)), 200);
+        tvm.accept();
+        delete sessions[sha256(key)];
+        tvm.commit();
+        _;
+    } 
+
+    function setStateBySessionKey(string key, uint _state) public externalMsg onlySessionKey(key) {
+        setState(_state);
+        gc();
+    }
+
     function setStateByOwner(uint _state) public externalMsg {
         require(msg.pubkey() == owner, 101);
         tvm.accept();
         setState(_state);
+        gc();
     }
 
     function setStateByAnyone(uint _state) external internalMsg {

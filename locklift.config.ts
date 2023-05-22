@@ -1,5 +1,14 @@
 import { LockliftConfig } from "locklift";
 import { FactorySource } from "./build/factorySource";
+import "locklift-deploy";
+import { Deployments } from "locklift-deploy";
+
+declare module "locklift" {
+    //@ts-ignore
+    export interface Locklift {
+        deployments: Deployments<FactorySource>;
+    }
+}
 
 declare global {
   const locklift: import("locklift").Locklift<FactorySource>;

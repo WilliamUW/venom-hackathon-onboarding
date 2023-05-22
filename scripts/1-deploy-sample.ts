@@ -18,9 +18,9 @@ async function main() {
     "external_url": "https://venom.network"
   };
   const signer = (await locklift.keystore.getSigner("0"))!;
-  const nft = locklift.factory.getContractArtifacts("Nft");
-  const index = locklift.factory.getContractArtifacts("Index");
-  const indexBasis = locklift.factory.getContractArtifacts("IndexBasis");
+  // const nft = locklift.factory.getContractArtifacts("Nft");
+  // const index = locklift.factory.getContractArtifacts("Index");
+  // const indexBasis = locklift.factory.getContractArtifacts("IndexBasis");
   const { contract: sample, tx } = await locklift.factory.deployContract({
     contract: "Sample",
     publicKey: signer.publicKey,
@@ -31,14 +31,18 @@ async function main() {
     constructorParams: {
       _state: 0,
       root_: new Address("0:6bf25d251adabf1268a8870ad1b45d46fcf782ef9f1bfa7c16032484d3e54ac7"),
-      json: JSON.stringify(json),
-      codeNft: nft.code,
-      codeIndex: index.code,
-      codeIndexBasis: indexBasis.code
+      // json: JSON.stringify(json),
+      // codeNft: nft.code,
+      // codeIndex: index.code,
+      // codeIndexBasis: indexBasis.code
     },
-    value: locklift.utils.toNano(5),
+    value: locklift.utils.toNano(1),
   });
   console.log(`Sample deployed at: ${sample.address.toString()}`);
+
+  
+
+
 }
 
 main()
