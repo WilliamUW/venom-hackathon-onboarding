@@ -6,29 +6,7 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"_state","type":"uint256"},
-				{"name":"root_","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "onDeployWallet",
-			"inputs": [
-				{"name":"_wallet","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "onAcceptTokensTransfer",
-			"inputs": [
-				{"name":"tokenRoot","type":"address"},
-				{"name":"amount","type":"uint128"},
-				{"name":"sender","type":"address"},
-				{"name":"senderWallet","type":"address"},
-				{"name":"remainingGasTo","type":"address"},
-				{"name":"payload","type":"cell"}
+				{"name":"_state","type":"uint256"}
 			],
 			"outputs": [
 			]
@@ -67,19 +45,11 @@
 			]
 		},
 		{
-			"name": "getDetails",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"state","type":"uint256"}
-			]
-		},
-		{
 			"name": "state",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"state","type":"uint256"}
+				{"name":"state","type":"uint256[]"}
 			]
 		},
 		{
@@ -103,23 +73,6 @@
 			],
 			"outputs": [
 			]
-		},
-		{
-			"name": "ThankYou",
-			"inputs": [
-				{"name":"sender","type":"address"},
-				{"name":"amount","type":"uint128"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "NewWallet",
-			"inputs": [
-				{"name":"some","type":"address"}
-			],
-			"outputs": [
-			]
 		}
 	],
 	"fields": [
@@ -127,9 +80,7 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"nonce","type":"uint256"},
 		{"name":"owner","type":"uint256"},
-		{"name":"root","type":"address"},
-		{"name":"wallet","type":"address"},
-		{"name":"state","type":"uint256"},
+		{"name":"state","type":"uint256[]"},
 		{"components":[{"name":"created","type":"uint64"}],"name":"sessions","type":"map(uint256,tuple)"},
 		{"name":"m_messages","type":"map(uint256,uint32)"}
 	]

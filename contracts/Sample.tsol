@@ -2,58 +2,18 @@ pragma ever-solidity >= 0.62.0;
 pragma AbiHeader time;
 pragma AbiHeader expire;
 
-import "tip3/contracts/interfaces/IAcceptTokensTransferCallback.sol";
-import "tip3/contracts/interfaces/ITokenRoot.sol";
 
-
-contract Sample is IAcceptTokensTransferCallback {
+contract Sample {
     uint static nonce;
     uint256 static owner;
 
-    address root;
-    address wallet;
-    uint public state;
+    uint[] public state;
 
     event StateChange(uint _state);
-    event ThankYou(address sender, uint128 amount);
-    event NewWallet(address some);
 
-    constructor(uint _state, address root_) public {
+    constructor(uint _state) public {
         tvm.accept();
-        root = root_;
-        ITokenRoot(root).deployWallet{
-            value: 2_000_000_000,
-            callback: onDeployWallet
-        }(this, 1_000_000_000);
         setState(_state);
-    }
-
-    // function mint() external internalMsg {
-    //     _mintNft(_json);
-    // }
-
-    function onDeployWallet(address _wallet) public {
-        wallet = _wallet;
-    }
-
-    function onAcceptTokensTransfer(
-        address tokenRoot,
-        uint128 amount,
-        address sender,
-        address senderWallet,
-        address remainingGasTo,
-        TvmCell payload
-    ) external override {
-        require(msg.sender == wallet, 103);
-        require(tokenRoot == root, 103);
-
-        emit ThankYou(sender, amount);
-
-        // disables warnings
-        tokenRoot;
-        senderWallet;
-        remainingGasTo;
-        payload;
     }
 
     struct Session {
@@ -80,7 +40,7 @@ contract Sample is IAcceptTokensTransferCallback {
     function afterSignatureCheck(TvmSlice body, TvmCell) private inline returns (TvmSlice) {
         // load and drop message timestamp (uint64)
         (, uint32 expireAt) = body.decode(uint64, uint32);
-        require(expireAt > now, 57);
+        require(expireAt > now, 5700);
         uint256 bodyHash = tvm.hash(body);
         require(!m_messages.exists(bodyHash), 1002);
         tvm.accept();
@@ -124,17 +84,9 @@ contract Sample is IAcceptTokensTransferCallback {
 
     function setState(uint _state) private {
         require(_state <= 100, 103);
-        state = _state;
+        state.push(_state);
 
         emit StateChange(_state);
     }
 
-    function getDetails()
-        external
-        pure
-    returns (
-        uint state
-    ) {
-        return state;
-    }
 }

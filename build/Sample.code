@@ -9,43 +9,11 @@ IFREF {
 }
 GETGLOB 6
 THROWIF 51
-OVER
-PUSHCONT {
-	LDU 256
-	LDREF
-	ENDS
-	CTOS
-}
-PUSHCONT {
-	LDU 256
-}
-IFELSE
-LDMSGADDR
+LDU 256
 ENDS
-.loc ../contracts/Sample.tsol, 22
+.loc ../contracts/Sample.tsol, 15
 ACCEPT
-.loc ../contracts/Sample.tsol, 23
-SETGLOB 12
-.loc ../contracts/Sample.tsol, 24
-PUSHINT 1000000000
-MYADDR
-GETGLOB 12
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHINT 3112111703474754619475120804657301188247553
-STUR 143
-ROTREV
-PUSHSLICE x31edd4c74575558e
-NEWC
-STSLICE
-STSLICE
-STU 128
-STBREFR
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../contracts/Sample.tsol, 28
+.loc ../contracts/Sample.tsol, 16
 CALLREF {
 	CALL $setState_a9e966b7_internal_macro$
 }
@@ -54,110 +22,6 @@ CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
-
-.macro onDeployWallet
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/Sample.tsol, 35
-OVER
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-}
-IF
-LDMSGADDR
-ENDS
-.loc ../contracts/Sample.tsol, 0
-CALLREF {
-	CALL $onDeployWallet_65bf83eb_internal_macro$
-}
-DROP
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.globl	onDeployWallet_65bf83eb_internal
-.type	onDeployWallet_65bf83eb_internal, @function
-CALL $onDeployWallet_65bf83eb_internal_macro$
-
-.macro onDeployWallet_65bf83eb_internal_macro
-.loc ../contracts/Sample.tsol, 36
-SETGLOB 13
-.loc ../contracts/Sample.tsol, 0
-
-.macro onAcceptTokensTransfer
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/Sample.tsol, 39
-OVER
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-}
-IF
-LDMSGADDR
-LDU 128
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-LDREF
-ENDS
-.loc ../contracts/Sample.tsol, 0
-CALLREF {
-	CALL $onAcceptTokensTransfer_e63f2284_internal_macro$
-}
-DROP
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.macro onAcceptTokensTransfer_e63f2284_internal_macro
-.loc ../contracts/Sample.tsol, 47
-BLKDROP 3
-GETGLOB 9
-GETGLOB 13
-SDEQ
-THROWIFNOT 103
-.loc ../contracts/Sample.tsol, 48
-ROT
-GETGLOB 12
-SDEQ
-THROWIFNOT 103
-.loc ../contracts/Sample.tsol, 50
-PUSHSLICE xc00000000000000000000000006c85479e
-NEWC
-STSLICE
-STSLICE
-STU 128
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../contracts/Sample.tsol, 0
 
 .macro addSessionKeys
 DROP
@@ -168,7 +32,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Sample.tsol, 91
+.loc ../contracts/Sample.tsol, 51
 LDU 32
 LDDICT
 ROTREV
@@ -190,13 +54,13 @@ THROW 0
 CALL $addSessionKeys_3a7efd30_internal_macro$
 
 .macro addSessionKeys_3a7efd30_internal_macro
-.loc ../contracts/Sample.tsol, 91
+.loc ../contracts/Sample.tsol, 51
 DEPTH
 ADDCONST -5
 PICK
 EQINT -1
 THROWIFNOT 71
-.loc ../contracts/Sample.tsol, 92
+.loc ../contracts/Sample.tsol, 52
 GETGLOB 5
 DUP
 ISNULL
@@ -208,9 +72,9 @@ IF
 GETGLOB 11
 EQUAL
 THROWIFNOT 101
-.loc ../contracts/Sample.tsol, 93
+.loc ../contracts/Sample.tsol, 53
 ACCEPT
-.loc ../contracts/Sample.tsol, 94
+.loc ../contracts/Sample.tsol, 54
 DUP
 SECOND
 PUSHINT 0
@@ -230,11 +94,11 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/Sample.tsol, 95
+	.loc ../contracts/Sample.tsol, 55
 	LTIME
 	SINGLE
 	OVER
-	GETGLOB 15
+	GETGLOB 13
 	ROT
 	CALLREF {
 		UNSINGLE
@@ -244,7 +108,7 @@ PUSHCONT {
 	ROTREV
 	PUSHPOW2 8
 	DICTUSETB
-	SETGLOB 15
+	SETGLOB 13
 	.loc ../contracts/Sample.tsol, 0
 	OVER
 	INC
@@ -252,10 +116,10 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 3
-.loc ../contracts/Sample.tsol, 68
+.loc ../contracts/Sample.tsol, 28
 PUSHINT 0
-.loc ../contracts/Sample.tsol, 69
-GETGLOB 16
+.loc ../contracts/Sample.tsol, 29
+GETGLOB 14
 DUP
 PUSHPOW2 8
 DICTUMIN
@@ -275,25 +139,25 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/Sample.tsol, 70
+	.loc ../contracts/Sample.tsol, 30
 	PUSH S4
 	GTINT 29
 	IFRETALT
-	.loc ../contracts/Sample.tsol, 73
+	.loc ../contracts/Sample.tsol, 33
 	PUSH S4
 	INC
 	POP S5
-	.loc ../contracts/Sample.tsol, 74
+	.loc ../contracts/Sample.tsol, 34
 	NOW
 	LEQ
 	PUSHCONT {
-		.loc ../contracts/Sample.tsol, 75
+		.loc ../contracts/Sample.tsol, 35
 		DUP
-		GETGLOB 16
+		GETGLOB 14
 		PUSHPOW2 8
 		DICTUDEL
 		DROP
-		SETGLOB 16
+		SETGLOB 14
 		.loc ../contracts/Sample.tsol, 0
 	}
 	IF
@@ -326,7 +190,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Sample.tsol, 108
+.loc ../contracts/Sample.tsol, 68
 LDREF
 LDU 256
 ENDS
@@ -345,26 +209,26 @@ THROW 0
 CALL $setStateBySessionKey_f60f1269_internal_macro$
 
 .macro setStateBySessionKey_f60f1269_internal_macro
-.loc ../contracts/Sample.tsol, 108
+.loc ../contracts/Sample.tsol, 68
 DEPTH
 ADDCONST -5
 PICK
 EQINT -1
 THROWIFNOT 71
 PUSH2 S1, S1
-.loc ../contracts/Sample.tsol, 101
+.loc ../contracts/Sample.tsol, 61
 CTOS
 SHA256U
-GETGLOB 15
+GETGLOB 13
 PUSHPOW2 8
 DICTUGET
 NULLSWAPIFNOT
 NIP
 THROWIFNOT 200
-.loc ../contracts/Sample.tsol, 102
+.loc ../contracts/Sample.tsol, 62
 ACCEPT
-.loc ../contracts/Sample.tsol, 103
-GETGLOB 15
+.loc ../contracts/Sample.tsol, 63
+GETGLOB 13
 OVER
 CTOS
 SHA256U
@@ -372,23 +236,23 @@ SWAP
 PUSHPOW2 8
 DICTUDEL
 DROP
-SETGLOB 15
-.loc ../contracts/Sample.tsol, 104
+SETGLOB 13
+.loc ../contracts/Sample.tsol, 64
 CALLREF {
 	CALL $c7_to_c4$
 }
 COMMIT
-.loc ../contracts/Sample.tsol, 105
+.loc ../contracts/Sample.tsol, 65
 ROTREV
-.loc ../contracts/Sample.tsol, 109
+.loc ../contracts/Sample.tsol, 69
 DUP
 CALLREF {
 	CALL $setState_a9e966b7_internal_macro$
 }
-.loc ../contracts/Sample.tsol, 68
+.loc ../contracts/Sample.tsol, 28
 PUSHINT 0
-.loc ../contracts/Sample.tsol, 69
-GETGLOB 16
+.loc ../contracts/Sample.tsol, 29
+GETGLOB 14
 DUP
 PUSHPOW2 8
 DICTUMIN
@@ -408,25 +272,25 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/Sample.tsol, 70
+	.loc ../contracts/Sample.tsol, 30
 	PUSH S4
 	GTINT 29
 	IFRETALT
-	.loc ../contracts/Sample.tsol, 73
+	.loc ../contracts/Sample.tsol, 33
 	PUSH S4
 	INC
 	POP S5
-	.loc ../contracts/Sample.tsol, 74
+	.loc ../contracts/Sample.tsol, 34
 	NOW
 	LEQ
 	PUSHCONT {
-		.loc ../contracts/Sample.tsol, 75
+		.loc ../contracts/Sample.tsol, 35
 		DUP
-		GETGLOB 16
+		GETGLOB 14
 		PUSHPOW2 8
 		DICTUDEL
 		DROP
-		SETGLOB 16
+		SETGLOB 14
 		.loc ../contracts/Sample.tsol, 0
 	}
 	IF
@@ -459,7 +323,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Sample.tsol, 113
+.loc ../contracts/Sample.tsol, 73
 LDU 256
 ENDS
 .loc ../contracts/Sample.tsol, 0
@@ -477,13 +341,13 @@ THROW 0
 CALL $setStateByOwner_97913b60_internal_macro$
 
 .macro setStateByOwner_97913b60_internal_macro
-.loc ../contracts/Sample.tsol, 113
+.loc ../contracts/Sample.tsol, 73
 DEPTH
 ADDCONST -5
 PICK
 EQINT -1
 THROWIFNOT 71
-.loc ../contracts/Sample.tsol, 114
+.loc ../contracts/Sample.tsol, 74
 GETGLOB 5
 DUP
 ISNULL
@@ -495,17 +359,17 @@ IF
 GETGLOB 11
 EQUAL
 THROWIFNOT 101
-.loc ../contracts/Sample.tsol, 115
+.loc ../contracts/Sample.tsol, 75
 ACCEPT
-.loc ../contracts/Sample.tsol, 116
+.loc ../contracts/Sample.tsol, 76
 DUP
 CALLREF {
 	CALL $setState_a9e966b7_internal_macro$
 }
-.loc ../contracts/Sample.tsol, 68
+.loc ../contracts/Sample.tsol, 28
 PUSHINT 0
-.loc ../contracts/Sample.tsol, 69
-GETGLOB 16
+.loc ../contracts/Sample.tsol, 29
+GETGLOB 14
 DUP
 PUSHPOW2 8
 DICTUMIN
@@ -525,25 +389,25 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/Sample.tsol, 70
+	.loc ../contracts/Sample.tsol, 30
 	PUSH S4
 	GTINT 29
 	IFRETALT
-	.loc ../contracts/Sample.tsol, 73
+	.loc ../contracts/Sample.tsol, 33
 	PUSH S4
 	INC
 	POP S5
-	.loc ../contracts/Sample.tsol, 74
+	.loc ../contracts/Sample.tsol, 34
 	NOW
 	LEQ
 	PUSHCONT {
-		.loc ../contracts/Sample.tsol, 75
+		.loc ../contracts/Sample.tsol, 35
 		DUP
-		GETGLOB 16
+		GETGLOB 14
 		PUSHPOW2 8
 		DICTUDEL
 		DROP
-		SETGLOB 16
+		SETGLOB 14
 		.loc ../contracts/Sample.tsol, 0
 	}
 	IF
@@ -576,7 +440,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Sample.tsol, 120
+.loc ../contracts/Sample.tsol, 80
 LDU 256
 ENDS
 .loc ../contracts/Sample.tsol, 0
@@ -590,19 +454,19 @@ CALLREF {
 THROW 0
 
 .macro setStateByAnyone_3eb56ef5_internal_macro
-.loc ../contracts/Sample.tsol, 120
+.loc ../contracts/Sample.tsol, 80
 DEPTH
 ADDCONST -5
 PICK
 THROWIF 72
-.loc ../contracts/Sample.tsol, 121
+.loc ../contracts/Sample.tsol, 81
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 1000000000
 GEQ
 THROWIFNOT 102
-.loc ../contracts/Sample.tsol, 122
+.loc ../contracts/Sample.tsol, 82
 CALLREF {
 	CALL $setState_a9e966b7_internal_macro$
 }
@@ -613,14 +477,25 @@ CALLREF {
 CALL $setState_a9e966b7_internal_macro$
 
 .macro setState_a9e966b7_internal_macro
-.loc ../contracts/Sample.tsol, 126
+.loc ../contracts/Sample.tsol, 86
 DUP
 LESSINT 101
 THROWIFNOT 103
-.loc ../contracts/Sample.tsol, 127
-DUP
-SETGLOB 14
-.loc ../contracts/Sample.tsol, 129
+.loc ../contracts/Sample.tsol, 87
+GETGLOB 12
+OVER
+NEWC
+STU 256
+SWAP
+UNPAIR
+OVER
+INC
+ROLLREV 3
+PUSHINT 32
+DICTUSETB
+PAIR
+SETGLOB 12
+.loc ../contracts/Sample.tsol, 89
 PUSHSLICE xc0000000000000000000000000633b31a8
 NEWC
 STSLICE
@@ -628,48 +503,6 @@ STU 256
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/Sample.tsol, 0
-
-.macro getDetails
-DROP
-GETGLOB 6
-THROWIFNOT 76
-.loc ../contracts/Sample.tsol, 132
-ENDS
-.loc ../contracts/Sample.tsol, 0
-CALLREF {
-	CALL $getDetails_fbbf93a0_internal_macro$
-}
-OVER
-PUSHCONT {
-	PUSH S3
-	CTOS
-	LDU 2
-	LDMSGADDR
-	DROP
-	NIP
-	NEWC
-	STSLICECONST xc
-	STSLICE
-	PUSHINT 2690825242
-	STUR 130
-	STU 256
-	ENDC
-	PUSHINT 0
-	SENDRAWMSG
-}
-PUSHCONT {
-	DROP
-}
-IFELSE
-IFREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.macro getDetails_fbbf93a0_internal_macro
-.loc ../contracts/Sample.tsol, 132
-PUSHINT 0
 .loc ../contracts/Sample.tsol, 0
 
 .macro c4_to_c7
@@ -680,20 +513,14 @@ LDU 1 ; ctor flag
 NIP
 LDU 256
 LDU 256
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-LDU 256
+LDU 32
+LDDICT
+ROTREV
+PAIR
+SWAP
 LDDICT
 LDDICT
 ENDS
-SETGLOB 16
-SETGLOB 15
 SETGLOB 14
 SETGLOB 13
 SETGLOB 12
@@ -729,15 +556,11 @@ PUSHCONT {
 		PLDU 256
 	}
 	IF
-	PUSHREFSLICE {
-		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-	}
-	DUP
 	PUSHINT 0
 	NEWDICT
+	PAIR
+	NEWDICT
 	DUP
-	SETGLOB 16
-	SETGLOB 15
 	SETGLOB 14
 	SETGLOB 13
 	SETGLOB 12
@@ -756,8 +579,6 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
-GETGLOB 16
-GETGLOB 15
 GETGLOB 14
 GETGLOB 13
 GETGLOB 12
@@ -769,17 +590,13 @@ STU 256
 STONE
 STU 256
 STU 256
-ROLLREV 5
-NEWC
-STSLICE
-ROLLREV 4
-NEWC
-STSLICE
-STU 256
+SWAP
+UNPAIR
+XCHG S2
+STU 32
 STDICT
 STDICT
-STBREFR
-STBREFR
+STDICT
 ENDC
 POPROOT
 
@@ -807,10 +624,7 @@ NEQINT 1
 SETGLOB 6
 PUSH S2
 CTOS
-LDU 4 ; bounced tail
-LDMSGADDR ; bounced src tail
-DROP
-SETGLOB 9
+PLDU 4
 MODPOW2 1
 IFRET
 OVER
@@ -840,10 +654,6 @@ CTOS
 SBITS
 NEQINT 1
 SETGLOB 6
-PUSHREFSLICE {
-	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-}
-SETGLOB 9
 OVER
 CALLREF {
 	CALL $c4_to_c7_with_init_storage$
@@ -864,40 +674,41 @@ PUSHCONT {
 }
 IF
 PUSH2 S3, S0
-.loc ../contracts/Sample.tsol, 82
+.loc ../contracts/Sample.tsol, 42
 LDU 64
 LDU 32
 POP S4
 NIP
-.loc ../contracts/Sample.tsol, 83
-DUP
+.loc ../contracts/Sample.tsol, 43
+PUSHINT 5700
+OVER
 NOW
 GREATER
-THROWIFNOT 57
-.loc ../contracts/Sample.tsol, 84
+THROWANYIFNOT
+.loc ../contracts/Sample.tsol, 44
 PUSH S2
 HASHSU
-.loc ../contracts/Sample.tsol, 85
+.loc ../contracts/Sample.tsol, 45
 DUP
-GETGLOB 16
+GETGLOB 14
 PUSHPOW2 8
 DICTUGET
 NULLSWAPIFNOT
 NIP
 THROWIF 1002
-.loc ../contracts/Sample.tsol, 86
+.loc ../contracts/Sample.tsol, 46
 ACCEPT
-.loc ../contracts/Sample.tsol, 87
+.loc ../contracts/Sample.tsol, 47
 DUP
-GETGLOB 16
+GETGLOB 14
 PUSH S3
 NEWC
 STU 32
 ROTREV
 PUSHPOW2 8
 DICTUSETB
-SETGLOB 16
-.loc ../contracts/Sample.tsol, 88
+SETGLOB 14
+.loc ../contracts/Sample.tsol, 48
 BLKDROP 3
 .loc ../contracts/Sample.tsol, 0
 LDU 32 ; funcId body
@@ -913,13 +724,17 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 14
+GETGLOB 12
 OVER
 PUSHCONT {
-	PUSHSLICE xc0000000000000000000000000a7965100
+	PUSHSLICE xc0000000000000000000000000b66e9bde
 	NEWC
 	STSLICE
-	STU 256
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
 	ENDC
 	PUSHINT 0
 	SENDRAWMSG
@@ -933,7 +748,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 15
+GETGLOB 13
 OVER
 PUSHCONT {
 	PUSHSLICE xc000000000000000000000000092790079
@@ -949,15 +764,9 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 543341594
+PUSHINT 913218526
 LEQ
 IFJMPREF {
-	DUP
-	PUSHINT 30752029
-	EQUAL
-	IFJMPREF {
-		CALL $constructor$
-	}
 	DUP
 	PUSHINT 309919865
 	EQUAL
@@ -971,39 +780,16 @@ IFJMPREF {
 		CALL $setStateByOwner$
 	}
 	DUP
-	PUSHINT 543341594
-	EQUAL
-	IFJMPREF {
-		CALL $getDetails$
-	}
-}
-DUP
-PUSHINT 1174223269
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 664162560
-	EQUAL
-	IFJMPREF {
-		CALL $state$
-	}
-	DUP
 	PUSHINT 803347336
 	EQUAL
 	IFJMPREF {
 		CALL $addSessionKeys$
 	}
 	DUP
-	PUSHINT 1165317518
+	PUSHINT 913218526
 	EQUAL
 	IFJMPREF {
-		CALL $onDeployWallet$
-	}
-	DUP
-	PUSHINT 1174223269
-	EQUAL
-	IFJMPREF {
-		CALL $setStateBySessionKey$
+		CALL $state$
 	}
 }
 DUP
@@ -1011,10 +797,16 @@ PUSHINT 1946665966
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1893244873
+	PUSHINT 1016193477
 	EQUAL
 	IFJMPREF {
-		CALL $onAcceptTokensTransfer$
+		CALL $constructor$
+	}
+	DUP
+	PUSHINT 1174223269
+	EQUAL
+	IFJMPREF {
+		CALL $setStateBySessionKey$
 	}
 	DUP
 	PUSHINT 1946665966
