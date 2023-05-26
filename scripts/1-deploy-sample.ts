@@ -1,11 +1,8 @@
-import { Address, getRandomNonce, toNano } from "locklift";
+import { getRandomNonce, toNano } from "locklift";
 import { sha256 } from "js-sha256";
 
 async function main() {
   const signer = (await locklift.keystore.getSigner("0"))!;
-  // const nft = locklift.factory.getContractArtifacts("Nft");
-  // const index = locklift.factory.getContractArtifacts("Index");
-  // const indexBasis = locklift.factory.getContractArtifacts("IndexBasis");
   const { contract: sample, tx } = await locklift.factory.deployContract({
     contract: "Sample",
     publicKey: signer.publicKey,
@@ -16,34 +13,26 @@ async function main() {
     constructorParams: {
       _state: 0,
     },
-    value: locklift.utils.toNano(1),
+    value: toNano(1),
   });
   console.log(`Sample deployed at: ${sample.address.toString()}`);
 
-  const keys = [];
-  const sessions = [];
+  const hashes = [];
+  const preimages = [];
   for (let i = 0; i < 2; i++) {
     const n = getRandomNonce();
-    sessions.push(n.toString());
+    preimages.push(n.toString());
     const h = sha256(n.toString());
-    keys.push(`0x${h}`);
+    hashes.push(`0x${h}`);
   }
 
   await sample.methods.addSessionKeys({
-    hashes: keys
+    hashes: hashes
   }).sendExternal({
     publicKey: signer!.publicKey
   });
 
-  console.log("added session keys", keys, sessions);
-
-  await Promise.all([
-    sample.methods.setStateBySessionKey({key: sessions[0], _state: 3}).sendExternal({withoutSignature: true, publicKey: "0"}),
-    sample.methods.setStateBySessionKey({key: sessions[1], _state: 2}).sendExternal({withoutSignature: true, publicKey: "0"})
-  ]);
-
-  const { state } = await sample.methods.state({}).call();
-  console.log('current state:', state);
+  console.log("added sessions", hashes, preimages);
 
 }
 

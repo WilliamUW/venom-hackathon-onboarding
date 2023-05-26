@@ -10,8 +10,8 @@ import { SAMPLE_ABI } from './abi/Sample';
 const initVenomConnect = async () => {
   return new VenomConnect({
     theme: 'dark',
-    checkNetworkId: 1002,
-    checkNetworkName: "Venom Devnet",
+    checkNetworkId: 0,
+    checkNetworkName: "Local Node",
     providersOptions: {
       venomwallet: {
         walletWaysToConnect: [
@@ -44,7 +44,7 @@ const initVenomConnect = async () => {
   });
 };
 
-const SAMPLE_ADDR = new Address("");
+const SAMPLE_ADDR = new Address("0:020ff6e84b1ceec087b81154e67c15f055cd64038e414b88b0ec017768dd27df");
 
 function App() {
   const [VC, setVC] = useState<VenomConnect | undefined>();
@@ -106,19 +106,20 @@ function App() {
   };
 
   const [sample, setSample] = useState<Contract<typeof SAMPLE_ABI> | undefined>();
-  const [sampleState, setSampleState] = useState<number>();
+  const [sampleState, setSampleState] = useState<string[]>();
 
   useEffect(() => {
     if ((!sample) || (!isConnected)) return;
     (async () => {
       const {state} = await sample.methods.state({}).call();
-      setSampleState(Number(state));
+      setSampleState(state);
     })();
 
     const contractEvents = sample.events(new provider!.Subscriber());
     contractEvents.on(event => {
       if (event.event != "StateChange") return;
-      setSampleState(Number(event.data._state));
+      sampleState?.push(event.data._state);
+      setSampleState(sampleState);
     })
   }, [sample]);
 
@@ -129,9 +130,16 @@ function App() {
   }, [provider]);
 
   const sendExternalMsg = async () => {
-    sample?.methods.setStateByOwner({_state: 42}).sendExternal({
-      publicKey: pubkey!,
-    });
+    await Promise.all([
+      sample?.methods.setStateBySessionKey({key: "33360", _state: 44}).sendExternal({
+        withoutSignature: true,
+        publicKey: "0",
+      }),
+      sample?.methods.setStateBySessionKey({key: "1503", _state: 45}).sendExternal({
+        withoutSignature: true,
+        publicKey: "0",
+      }),
+    ]);
   }
 
   return (
