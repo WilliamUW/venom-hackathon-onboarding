@@ -44,7 +44,7 @@ const initVenomConnect = async () => {
   });
 };
 
-const SAMPLE_ADDR = new Address("0:020ff6e84b1ceec087b81154e67c15f055cd64038e414b88b0ec017768dd27df");
+const SAMPLE_ADDR = new Address("0:4847102d44d0ffb3739b6d166ad694ed2896e760a70ae664152beef540c6f006");
 
 function App() {
   const [VC, setVC] = useState<VenomConnect | undefined>();
@@ -116,11 +116,11 @@ function App() {
     })();
 
     const contractEvents = sample.events(new provider!.Subscriber());
-    contractEvents.on(event => {
+    contractEvents.on(async (event) => {
       if (event.event != "StateChange") return;
-      sampleState?.push(event.data._state);
-      setSampleState(sampleState);
-    })
+      const {state} = await sample.methods.state({}).call();
+      setSampleState(state);
+    });
   }, [sample]);
 
   useEffect(() => {
@@ -131,11 +131,11 @@ function App() {
 
   const sendExternalMsg = async () => {
     await Promise.all([
-      sample?.methods.setStateBySessionKey({key: "33360", _state: 44}).sendExternal({
+      sample?.methods.setStateBySessionKey({key: "12", _state: 12}).sendExternal({
         withoutSignature: true,
         publicKey: "0",
       }),
-      sample?.methods.setStateBySessionKey({key: "1503", _state: 45}).sendExternal({
+      sample?.methods.setStateBySessionKey({key: "13", _state: 13}).sendExternal({
         withoutSignature: true,
         publicKey: "0",
       }),
@@ -146,7 +146,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         {addr ? <>
-          Sample state: {sampleState} <br />
+          Sample state: {sampleState?.toString()} <br />
           <button onClick={sendExternalMsg}>Change state</button>
           <button onClick={onDisconnect}>Disconnect</button>
           </>

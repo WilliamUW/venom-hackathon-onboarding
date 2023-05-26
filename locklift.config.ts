@@ -71,7 +71,7 @@ const config: LockliftConfig = {
       keys: {
         // Use everdev to generate your phrase
         // !!! Never commit it in your repos !!!
-        // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
+        phrase: "awful copper marine decide outside caught opinion quit rib concert six rare",
         amount: 20,
       },
     },
