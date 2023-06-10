@@ -3,8 +3,8 @@ import { Address, getRandomNonce, toNano } from "locklift";
 async function main() {
   const json = {
     "type": "Basic NFT",
-    "name": "Sample Name",
-    "description": "Hello world!",
+    "name": "VenomChat NFT",
+    "description": "Minting Venom NFT through chat",
     "preview": {
       "source": "https://venom.network/static/media/bg-main.6b6f0965e7c3b3d9833b.jpg",
       "mimetype": "image/png"
