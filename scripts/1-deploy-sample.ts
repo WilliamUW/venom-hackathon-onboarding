@@ -30,7 +30,7 @@ async function main() {
     },
     constructorParams: {
       _state: 0,
-      root_: new Address("0:6bf25d251adabf1268a8870ad1b45d46fcf782ef9f1bfa7c16032484d3e54ac7"),
+      root_: new Address("0:3eb450ea8e4a9bacc46fdd733caaa156edb8be82113469dae234ca6f8907e258"),
       json: JSON.stringify(json),
       codeNft: nft.code,
       codeIndex: index.code,
